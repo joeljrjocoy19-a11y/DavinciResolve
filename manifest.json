@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "Resolve Studio — Video Editor",
+  "short_name": "Resolve Studio",
+  "description": "A lightweight browser-based video editing workspace prototype.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#101115",
+  "theme_color": "#101115",
+  "categories": [
+    "video",
+    "graphics",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/resolve.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
