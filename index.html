@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101115">
+<meta name="description" content="Resolve Studio is a browser-based video editing workspace prototype.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/resolve.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icons/resolve.svg">
 <title>Resolve Studio — Video Editor</title>
 <style>
 :root{--bg:#101115;--panel:#191a20;--panel2:#202128;--line:#30313a;--text:#f2f2f5;--muted:#a2a3ad;--accent:#b8f34a;--purple:#9d72ff;--blue:#66b8ff}
@@ -77,5 +82,14 @@ $('newProject').onclick=()=>{if(confirm('Start a new project? This clears the cu
 $('saveProject').onclick=()=>{const data={app:'Resolve Studio beta',project:$('projectInput').value,preview:{title:$('titleInput').value,kicker:$('kickerInput').value,description:$('descInput').value,accent:$('accentInput').value,background:$('backgroundInput').value,titleSize:$('sizeInput').value},timeline:{video:[...$('videoLane').children].map(c=>c.dataset.name),titles:[...$('textLane').children].map(c=>c.dataset.name),audio:[...$('audioLane').children].map(c=>c.dataset.name)},note:'Project plan only. Media files are not embedded.'};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resolve-studio-project.json';a.click();URL.revokeObjectURL(a.href);toast('Project JSON saved')};
 $('exportBtn').onclick=()=>{toast('Prototype only: export rendering is not implemented yet. Use Save JSON to export the edit plan.');};
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.querySelector('.workspace-label').textContent='WORKSPACE · '+t.textContent.trim().toUpperCase();toast(t.textContent.trim()+' workspace selected — interface preview only')});
+
+// Register the PWA service worker so the app shell can work offline after its first visit.
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
 </script>
 </body></html>
